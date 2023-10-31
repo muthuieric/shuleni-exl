@@ -25,10 +25,10 @@ const TestimonialSlider = () => {
   };
 
   return (
-    <div className="h-96 flex flex-col items-center justify-center bg-blue-500">
-      <h2 className="text-3xl text-white mb-4">User Testimonials</h2>
+    <div className="h-80 pb-10 flex flex-col items-center justify-center bg-blue-500">
+      <h2 className="text-3xl text-white mb-2">User Testimonials</h2>
 
-      <div className="relative rounded-lg bg-white p-8 shadow-lg text-center max-w-xl r">
+      <div className="relative rounded-2xl bg-white p-8 shadow-lg text-center max-w-xl r">
         <button
           onClick={prevTestimonial}
           className="text-blue-500 hover:text-blue-700 transition duration-300 focus:outline-none absolute left-0 top-1/2 transform -translate-y-1/2"
