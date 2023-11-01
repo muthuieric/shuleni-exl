@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, make_response, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_cors import CORS
@@ -6,7 +6,7 @@ from sqlalchemy import func
 import bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
-from models import User, db
+from models import User, db, Message
 
 app = Flask(__name__)
 
@@ -78,6 +78,65 @@ def protected_route():
 @jwt_required()
 def logout():
     return jsonify({"message": "Logged out successfully"}), 200
+
+
+
+
+# chat
+@app.route('/messages', methods=['GET', 'POST'])
+def messages():
+    if request.method == 'GET':
+        messages = Message.query.order_by('created_at').all()
+
+        response = make_response(
+            jsonify([message.to_dict() for message in messages]),
+            200,
+        )
+    
+    elif request.method == 'POST':
+        data = request.get_json()
+        message = Message(
+            body=data['body'],
+            username=data['username']
+        )
+
+        db.session.add(message)
+        db.session.commit()
+
+        response = make_response(
+            jsonify(message.to_dict()),
+            201,
+        )
+
+    return response
+
+@app.route('/messages/<int:id>', methods=['PATCH', 'DELETE'])
+def messages_by_id(id):
+    message = Message.query.filter_by(id=id).first()
+
+    if request.method == 'PATCH':
+        data = request.get_json()
+        for attr in data:
+            setattr(message, attr, data[attr])
+            
+        db.session.add(message)
+        db.session.commit()
+
+        response = make_response(
+            jsonify(message.to_dict()),
+            200,
+        )
+
+    elif request.method == 'DELETE':
+        db.session.delete(message)
+        db.session.commit()
+
+        response = make_response(
+            jsonify({'deleted': True}),
+            200,
+        )
+
+    return response
 
 
 if __name__ == '__main__':
