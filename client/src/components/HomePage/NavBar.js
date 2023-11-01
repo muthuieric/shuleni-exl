@@ -22,7 +22,7 @@ const Navbar = () => {
         <div>
           <a
             href="/"
-            className="font-bold text-blue-500 text-2xl hover:text-blue-600 transition duration-300"
+            className="font-bold text-blue-600 text-2xl hover:text-blue-700 transition duration-300"
           >
             Shuleni
           </a>
@@ -37,7 +37,7 @@ const Navbar = () => {
           </button>
           <button
             onClick={toggleLogin}
-            className="py-2 px-4 font-medium bg-blue-500 text-white rounded-full hover:bg-blue-600"
+            className="py-2 px-4 font-medium bg-blue-600 text-white rounded-full hover:bg-blue-700"
           >
             Log In
           </button>

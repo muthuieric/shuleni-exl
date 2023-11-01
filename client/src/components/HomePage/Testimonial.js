@@ -25,13 +25,13 @@ const TestimonialSlider = () => {
   };
 
   return (
-    <div className="h-80 pb-10 flex flex-col items-center justify-center bg-blue-500">
+    <div className="h-80 pb-10 flex flex-col items-center justify-center bg-blue-600">
       <h2 className="text-3xl text-white mb-2">User Testimonials</h2>
 
       <div className="relative rounded-2xl bg-white p-8 shadow-lg text-center max-w-xl r">
         <button
           onClick={prevTestimonial}
-          className="text-blue-500 hover:text-blue-700 transition duration-300 focus:outline-none absolute left-0 top-1/2 transform -translate-y-1/2"
+          className="text-blue-600 hover:text-blue-700 transition duration-300 focus:outline-none absolute left-0 top-1/2 transform -translate-y-1/2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-8 h-8">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -39,11 +39,11 @@ const TestimonialSlider = () => {
         </button>
 
         <p className="text-lg mb-4">{testimonials[activeIndex].text}</p>
-        <p className="font-semibold text-blue-500">{testimonials[activeIndex].author}</p>
+        <p className="text-xl font-bold text-black">{testimonials[activeIndex].author}</p>
 
         <button
           onClick={nextTestimonial}
-          className="text-blue-500 hover:text-blue-700 transition duration-300 focus:outline-none absolute right-0 top-1/2 transform -translate-y-1/2"
+          className="text-blue-600 hover:text-blue-700 transition duration-300 focus:outline-none absolute right-0 top-1/2 transform -translate-y-1/2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-8 h-8">
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

@@ -1,23 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {useNavigate } from 'react-router-dom';
 
-const LoginForm = ({ onClose, onSwitchToSignUp }) => {
-  const handleLogin = (e) => {
+const LoginForm = ({onClose, onSwitchToSignUp }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState(''); 
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    // You can access form data using e.target
-    // Close the login form when login is successful
-    onClose();
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ Email: email, Password: password, Role:role }), 
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+
+        localStorage.setItem('token', token);
+
+              // Include the headers in your fetch request for protected routes
+              // const headers = {
+              //   'Content-Type': 'application/json',
+              //   'Authorization': `Bearer ${token}`,
+              // };
+        
+              // // Example: Fetch a protected route
+              // const protectedRouteResponse = await fetch('/protected-route', {
+              //   method: 'GET',
+              //   headers: headers,
+              // });
+
+        navigate('/chat');
+      } else {
+        setError('Invalid email, password, or role');
+        console.error('Login failed:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-white rounded-xl p-4 md:p-8 w-full max-w-md border border-gray-300">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-black">Sign In</h2>
-          <button
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold text-black">Sign In</h2>
+        <button
             type="button"
             onClick={onClose}
-            className="text-black focus:outline-none flex items-center"
+            className="text-black focus-outline-none flex items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -30,13 +69,15 @@ const LoginForm = ({ onClose, onSwitchToSignUp }) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-        </div>
-        <form onSubmit={handleLogin}>
+          </div>
+
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
               type="email"
               placeholder="Email"
-              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 border rounded-xl border-gray-300 focus:outline-none"
             />
           </div>
@@ -44,13 +85,15 @@ const LoginForm = ({ onClose, onSwitchToSignUp }) => {
             <input
               type="password"
               placeholder="Password"
-              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3 py-2 border rounded-xl border-gray-300 focus:outline-none"
             />
           </div>
           <div className="mb-4">
             <select
-              name="role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
               className="w-full px-3 py-2 border rounded-xl bg-white border-gray-300 focus:outline-none"
             >
               <option value="">Role</option>
@@ -59,10 +102,13 @@ const LoginForm = ({ onClose, onSwitchToSignUp }) => {
               <option value="Student">Student</option>
             </select>
           </div>
+
+          {error && <div className="m-5 text-red-600">{error}</div>}
+
           <div className="flex justify-between items-center">
             <button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-xl px-4 py-2 font-semibold"
+              className="w-full bg-blue-500 hover.bg-blue-600 text-white rounded-xl px-4 py-2 font-semibold"
             >
               Sign In
             </button>
@@ -73,7 +119,7 @@ const LoginForm = ({ onClose, onSwitchToSignUp }) => {
             Don't have an account?{' '}
             <span
               onClick={onSwitchToSignUp}
-              className="text-blue-500 cursor-pointer font-semibold"
+              className="text-blue-600 cursor-pointer font-semibold"
             >
               Sign up
             </span>

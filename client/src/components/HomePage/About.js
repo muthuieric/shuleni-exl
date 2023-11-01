@@ -11,7 +11,7 @@ const About = () => {
 
  {/* About Content */}
 <div className="p-4 text-center">
-  <h2 className="text-2xl font-bold text-blue-500 mb-4">About Shuleni</h2>
+  <h2 className="text-2xl font-bold text-blue-600 mb-4">About Shuleni</h2>
   <p className="text-base text-black">
     Shuleni is an innovative online education platform that aims to bridge the gap between physical and online
     education while maintaining the quality of learning. Our platform is designed to offer a comprehensive
@@ -21,7 +21,7 @@ const About = () => {
 </div>
 
 <div className="p-4 mb-8 text-center">
-  <h2 className="text-2xl font-bold text-blue-500 mb-4">Our Mission</h2>
+  <h2 className="text-2xl font-bold text-blue-600 mb-4">Our Mission</h2>
   <p className="text-base text-black">
     Our mission is to make quality education accessible to students everywhere, ensuring that they receive an
     enriching learning experience in a digital environment. We believe that online education can be as

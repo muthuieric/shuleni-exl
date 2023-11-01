@@ -1,16 +1,29 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+const handleLogout = async () => {
+  try {
+    const response = await fetch('/logout', { method: 'GET' });
+    if (response.ok) {
+      
+    } else {
+      console.error('Logout failed:', response.status);
+    }
+  } catch (error) {
+    console.error('Logout failed:', error);
+  }
+};
+
 function Sidebar() {
   return (
     
-    <div className="fixed bottom-0 left-0 w-full lg:w-40 lg:m-2 lg:h-screen lg:rounded-xl lg:relative lg:top-0 bg-blue-600 text-white flex flex-col items-center lg:items-start">
+    <div className="fixed bottom-0 left-0 w-full lg:w-40 lg:m-2 lg:h-screen lg:rounded-xl lg:relative lg:top-0 bg-blue-600 text-white flex flex-col items-center ">
       <h2 className="hidden lg:block p-4 mx-5 mt-4 mb-6 text-white font-bold text-xl">Shuleni</h2>
 
-      <div className=" w-full flex justify-around items-start lg:ml-6 lg:flex-col ">
+      <div className=" w-full flex justify-around items-center lg:flex-col  ">
         <NavLink
           to="/profile"
-          className="flex flex-col items-center text-white font-bold w-16 h-16 p-2 hover:text-white"
+          className="flex flex-col items-center justify-center text-white font-bold w-12 h-12 p-2 hover:text-white"
           activeClassName="bg-blue-800"
         >
           <div className="lg:flex items-center ">
@@ -20,7 +33,7 @@ function Sidebar() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="white"
-            strokeWidth={2}
+            strokeWidth={1.8}
             className="w-6 h-6"
           >
             <path
@@ -35,7 +48,7 @@ function Sidebar() {
 
         <NavLink
           to="/users"
-          className="flex flex-col items-center text-white font-bold w-16 h-16 p-2 hover:text-white"
+          className="flex flex-col items-center justify-center text-white font-bold w-12 h-12 p-2 hover:text-white"
           activeClassName="bg-blue-800"
         >
           <div className="lg:flex items-center">
@@ -44,7 +57,7 @@ function Sidebar() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="white"
-            strokeWidth={2}
+            strokeWidth={1.8}
             className="w-6 h-6"
           >
             <path
@@ -59,7 +72,7 @@ function Sidebar() {
 
         <NavLink
           to="/resources"
-          className="flex flex-col items-center text-white font-bold w-16 h-16 p-2 hover:text-white"
+          className="flex flex-col items-center justify-center text-white font-bold w-12 h-12 p-2 hover:text-white"
           activeClassName="bg-blue-800"
         >
           <div className="lg:flex justify-center items-center">
@@ -68,7 +81,7 @@ function Sidebar() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="white"
-            strokeWidth={2}
+            strokeWidth={1.8}
             className="w-6 h-6"
           >
             <path
@@ -83,7 +96,7 @@ function Sidebar() {
 
         <NavLink
           to="/chat"
-          className="flex flex-col items-center text-white font-bold w-16 h-16 p-2 hover:text-white"
+          className="flex flex-col items-center justify-center text-white font-bold w-12 h-12 p-2 hover:text-white"
           activeClassName="bg-blue-800"
         >
           <div className="lg:flex items-center">
@@ -92,7 +105,7 @@ function Sidebar() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="white"
-            strokeWidth={2}
+            strokeWidth={1.8}
             className="w-6 h-6"
           >
             <path
@@ -106,9 +119,10 @@ function Sidebar() {
         </NavLink>
 
         <NavLink
-          to="/logout"
-          className="flex flex-col items-center text-white font-bold w-16 h-16 p-2 hover:text-white"
+          to="/"
+          className="flex flex-col items-center justify-center text-white font-bold w-12 h-12 p-2 hover:text-white"
           activeClassName="bg-blue-800"
+          onClick={handleLogout}
         >
           <div className="lg:flex items-center">
           <svg
@@ -116,7 +130,7 @@ function Sidebar() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="white"
-            strokeWidth={2}
+            strokeWidth={1.8}
             className="w-6 h-6"
           >
             <path
