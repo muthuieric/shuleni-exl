@@ -32,7 +32,7 @@ const AddUsers = () => {
       if (isUserRegistered) {
         setAlreadyRegistered(true);
       } else {
-        const response = await fetch('/add-users', {
+        const response = await fetch('/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

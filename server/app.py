@@ -6,7 +6,8 @@ from sqlalchemy import func
 import bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
-from models import User, db, Message
+
+from models import User, db, Message, School
 
 app = Flask(__name__)
 
@@ -189,8 +190,98 @@ api.add_resource(Messages, '/messages')
 api.add_resource(MessagesById, '/messages/<int:id>')
 
 
+# -----------------------------------------School--------------------------------------------------
 
+   
+class Schools(Resource):
+    
+    def get(self):
+        schools = School.query.all()
+        school_list = []
+        
+        for school in schools:
+            school_dict = {
+                'id': school.id,
+                'school_name': school.school_name,
+                'poster': school.poster,
+                'location': school.location,
+                'created_at': school.created_at,
+            }
+            school_list.append(school_dict)
+        
+        return make_response(jsonify(school_list), 200)
+    
+    def post(self):
+        data = request.get_json()
+        new_school = School(
+            school_name=data.get('school_name'),
+            poster=data.get('poster'),
+            location=data.get('location'),
+        )
+        db.session.add(new_school)
+        db.session.commit()
+        
+        new_school_dict = {
+            'id': new_school.id,
+            'school_name': new_school.school_name,
+            'poster': new_school.poster,
+            'location': new_school.location,
+            'created_at': new_school.created_at,
+        }
+        return make_response(jsonify(new_school_dict), 200)
 
+class SchoolById(Resource):
+    
+    def get(self, id):
+        school = School.query.get(id)
+        
+        if school:
+            school_dict = {
+                'id': school.id,
+                'school_name': school.school_name,
+                'poster': school.poster,
+                'location': school.location,
+                'created_at': school.created_at,
+            }
+            return make_response(jsonify(school_dict), 200)
+        else:
+            return make_response(jsonify({"error": "School not found"}), 404)
+        
+    def put(self, id): 
+        school = School.query.get(id)
+        
+        if school:
+            data = request.get_json()
+            
+            for attr, value in data.items():
+                setattr(school, attr, value)
+                
+            db.session.commit()
+            
+            school_dict = {
+                'id': school.id,
+                'school_name': school.school_name,
+                'poster': school.poster,
+                'location': school.location,
+                'created_at': school.created_at,
+            }
+            return make_response(jsonify(school_dict), 200)
+        else:
+            return make_response(jsonify({"error": "School not found"}), 404)
+
+    def delete(self, id):
+        school = School.query.get(id)
+        
+        if school:
+            db.session.delete(school)
+            db.session.commit()
+            
+            return make_response(jsonify({"message": "School deleted successfully"}), 200)
+        else:
+            return make_response(jsonify({"error": "School not found"}), 404)
+
+api.add_resource(Schools, '/schools')
+api.add_resource(SchoolById, '/schools/<int:id>')
 
 
 if __name__ == '__main__':

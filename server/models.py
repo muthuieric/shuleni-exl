@@ -31,4 +31,13 @@ class Message(db.Model, SerializerMixin):
         return f'<Message by {self.username}: {self.body[:10]}...>'
 
 
+class School(db.Model, SerializerMixin):
+
+    __tablename__ = "schools"
+
+    id = db.Column(db.Integer(), primary_key=True)
+    school_name = db.Column(db.String, nullable=False)
+    poster = db.Column(db.String(), nullable=False) 
+    location = db.Column(db.String, nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
 

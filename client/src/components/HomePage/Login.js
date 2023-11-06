@@ -25,17 +25,7 @@ const LoginForm = ({onClose, onSwitchToSignUp }) => {
 
         localStorage.setItem('token', token);
 
-              // Include the headers in your fetch request for protected routes
-              // const headers = {
-              //   'Content-Type': 'application/json',
-              //   'Authorization': `Bearer ${token}`,
-              // };
-        
-              // // Example: Fetch a protected route
-              // const protectedRouteResponse = await fetch('/protected-route', {
-              //   method: 'GET',
-              //   headers: headers,
-              // });
+    
 
         navigate('/chat');
       } else {

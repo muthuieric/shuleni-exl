@@ -28,7 +28,7 @@ const SignupForm = ({ onClose, onSwitchToSignIn }) => {
       if (isUserRegistered) {
         setAlreadyRegistered(true);
       } else {
-        const response = await fetch('/register', {
+        const response = await fetch('/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
